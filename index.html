@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Pro Product | Fresh Shopping</title>
+<style>
+:root{--green:#1d6b3a;--yellow:#f5c518;--light:#fffdf0;--dark:#163322}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#fff;color:#17351f}
+button,input,select{font:inherit}button{cursor:pointer}
+.hidden{display:none!important}
+.login-page{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#fff 0 55%,#fff4b8 55%);padding:20px}
+.login-card{width:min(420px,100%);background:#fff;border:3px solid var(--green);border-radius:18px;padding:32px;box-shadow:8px 8px 0 var(--yellow)}
+.logo{text-align:center;font-size:34px;font-weight:900;color:var(--green)}.tag{text-align:center;color:#68756c;margin:8px 0 25px}
+label{display:block;font-weight:700;margin:14px 0 6px}input,select{width:100%;padding:12px;border:2px solid #b8c8bc;border-radius:9px;background:#fff}input:focus,select:focus{outline:2px solid var(--yellow)}
+.btn{border:0;border-radius:9px;padding:12px 17px;background:var(--green);color:#fff;font-weight:800}.btn:hover{filter:brightness(.92)}
+.yellow{background:var(--yellow);color:#17351f}.danger{background:#a62a2a}.msg{text-align:center;min-height:22px;font-weight:800;margin-top:13px}
+
+header{position:sticky;top:0;z-index:20;background:#fff;border-bottom:3px solid var(--yellow);box-shadow:0 2px 10px #0001}
+.nav{max-width:1200px;margin:auto;padding:13px 4%;display:flex;align-items:center;justify-content:space-between;gap:15px}.brand{font-size:27px;font-weight:900;color:var(--green)}.brand span{color:#c89e00}
+.nav-actions{display:flex;gap:7px;flex-wrap:wrap}.nav-actions .btn{padding:9px 12px}
+.badge{display:inline-flex;background:var(--yellow);color:#17351f;border-radius:50%;min-width:23px;height:23px;align-items:center;justify-content:center;margin-left:4px;font-size:12px}
+.container{max-width:1200px;margin:auto;padding:0 4%}
+.hero{margin-top:25px;padding:45px 7%;border-radius:22px;background:linear-gradient(120deg,var(--green),#2e874d);color:#fff}.hero h1{font-size:clamp(30px,5vw,52px);margin:0;max-width:750px}.hero p{font-size:17px;line-height:1.6;max-width:700px}.hero .btn{margin-top:10px}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:25px 0}.search{flex:1;min-width:220px}.toolbar select{width:auto;min-width:180px}
+.title{font-size:30px;color:var(--green);margin:25px 0 18px}
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:18px;padding-bottom:45px}
+.card{border:2px solid #d5dfd6;border-radius:14px;overflow:hidden;background:#fff;box-shadow:0 3px 12px #1d6b3a12;transition:.2s}.card:hover{transform:translateY(-3px);border-color:var(--yellow)}
+.card img{width:100%;height:180px;object-fit:cover;background:#eee}.card-body{padding:14px}.cat{font-size:12px;font-weight:800;color:#66806d;text-transform:uppercase}.card h3{font-size:19px;margin:7px 0}.price{font-size:20px;font-weight:900;color:var(--green);margin:10px 0}.unit{font-size:12px;color:#68756c}.card .btn{width:100%}
+.empty{text-align:center;padding:45px;color:#6b756d}
+
+.section{padding:25px 0 55px;min-height:60vh}
+.cart-row{display:flex;align-items:center;justify-content:space-between;gap:15px;border-bottom:1px solid #d9e0da;padding:15px 0}.cart-name{font-weight:800}.qty{display:flex;align-items:center;gap:8px;margin-top:7px}.qty button{width:30px;height:30px;border:1px solid #9aaa9d;border-radius:6px;background:#fff}.total{max-width:500px;margin:20px 0 0 auto;border:2px solid var(--green);border-radius:12px;padding:20px}.line{display:flex;justify-content:space-between;margin:8px 0}.grand{border-top:1px solid #bbb;padding-top:12px;font-size:21px;font-weight:900}
+
+.box{max-width:650px;border:2px solid #d5dfd6;border-radius:14px;padding:24px;background:#fff;box-shadow:0 3px 12px #1d6b3a12}.info{background:#fff8cc;border-left:5px solid var(--yellow);padding:15px;line-height:1.7;border-radius:7px}.status{font-weight:900;margin-top:14px;min-height:24px}
+.admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.full{grid-column:1/-1}.admin-list{display:grid;gap:9px;margin-top:20px}.admin-item{display:flex;justify-content:space-between;gap:10px;align-items:center;border:1px solid #ccd7ce;padding:12px;border-radius:9px}
+footer{text-align:center;border-top:2px solid var(--yellow);padding:25px;color:#68756c}
+@media(max-width:700px){.nav{align-items:flex-start;flex-direction:column}.nav-actions{width:100%}.hero{padding:30px 6%}.admin-grid{grid-template-columns:1fr}.full{grid-column:auto}.cart-row{align-items:flex-start;flex-direction:column}.total{margin-left:0}}
+</style>
+</head>
+<body>
+
+<div id="loginPage" class="login-page">
+  <div class="login-card">
+    <div class="logo">PRO PRODUCT</div>
+    <div class="tag">Fresh • Simple • Trusted</div>
+    <form id="loginForm">
+      <label>Username</label>
+      <input id="username" required autocomplete="username" placeholder="Enter username">
+      <label>Password</label>
+      <input id="password" type="password" required autocomplete="current-password" placeholder="Enter password">
+      <button class="btn" style="width:100%;margin-top:20px" type="submit">LOGIN</button>
+      <div id="loginMsg" class="msg"></div>
+    </form>
+  </div>
+</div>
+
+<div id="app" class="hidden">
+<header><div class="nav">
+  <div class="brand">PRO <span>PRODUCT</span></div>
+  <div class="nav-actions">
+    <button class="btn yellow" onclick="show('home')">Home</button>
+    <button class="btn yellow" onclick="show('cart')">My Cart <span id="cartCount" class="badge">0</span></button>
+    <button class="btn yellow" onclick="show('payment')">UPI Payment</button>
+    <button class="btn yellow" onclick="show('admin')">Admin</button>
+    <button class="btn" onclick="logout()">Logout</button>
+  </div>
+</div></header>
+
+<section id="home" class="section">
+<div class="container">
+  <div class="hero">
+    <h1>Fresh groceries for your everyday life.</h1>
+    <p>Shop vegetables, fruits and groceries from Pro Product. Add products to your cart and check your total before payment.</p>
+    <button class="btn yellow" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">SHOP NOW</button>
+  </div>
+  <h2 class="title">Our Products</h2>
+  <div class="toolbar">
+    <input id="search" class="search" placeholder="Search products..." oninput="renderProducts()">
+    <select id="filter" onchange="renderProducts()">
+      <option value="All">All Categories</option><option>Vegetables</option><option>Fruits</option><option>Groceries</option>
+    </select>
+  </div>
+  <div id="products" class="products"></div>
+</div>
+</section>
+
+<section id="cart" class="section hidden"><div class="container">
+<h2 class="title">My Cart</h2><div id="cartItems"></div><div id="cartTotal"></div>
+</div></section>
+
+<section id="payment" class="section hidden"><div class="container">
+<h2 class="title">UPI Payment</h2>
+<div class="box">
+  <div class="info"><strong>Payment details</strong><br>UPI ID must start with <strong>sasi</strong>.<br>Phone number: <strong>+91 9500608794</strong><br><small>This is a front-end demo payment check; it does not process real money.</small></div>
+  <label>UPI ID</label><input id="upi" placeholder="e.g. sasi@upi">
+  <label>Phone Number</label><input id="payPhone" placeholder="+91 9500608794" inputmode="tel">
+  <button class="btn" style="width:100%;margin-top:20px" onclick="pay()">PAY NOW</button>
+  <div id="payStatus" class="status"></div>
+</div>
+</div></section>
+
+<section id="admin" class="section hidden"><div class="container">
+<h2 class="title">Admin — Add New Product</h2>
+<div class="box">
+<p>Add a product whenever you want. It is saved in this browser using localStorage.</p>
+<form id="addForm">
+<div class="admin-grid">
+<div><label>Product Name</label><input id="pName" required placeholder="Fresh Tomato"></div>
+<div><label>Price (₹)</label><input id="pPrice" type="number" min="0" step="0.01" required placeholder="50"></div>
+<div><label>Category</label><select id="pCat"><option>Vegetables</option><option>Fruits</option><option>Groceries</option></select></div>
+<div><label>Unit / Details</label><input id="pUnit" placeholder="1 kg"></div>
+<div class="full"><label>Product Picture URL</label><input id="pUrl" type="url" required placeholder="https://example.com/image.jpg"></div>
+</div>
+<button class="btn" style="margin-top:20px" type="submit">ADD PRODUCT</button>
+<div id="adminMsg" class="msg"></div>
+</form>
+</div>
+<h3 class="title" style="font-size:23px">Manage Products</h3><div id="adminList" class="admin-list"></div>
+</div></section>
+<footer>© 2026 Pro Product · Fresh products, simple shopping</footer>
+</div>
+
+<script>
+const USER="sasi007", PASS="sasiiii0707", PAY_UPI="sasi", PAY_PHONE="9500608794";
+
+const defaults=[
+["Tomato",40,"Vegetables","1 kg","https://images.unsplash.com/photo-1546094096-0df4bcaaa337?auto=format&fit=crop&w=800&q=80"],
+["Potato",35,"Vegetables","1 kg","https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=800&q=80"],
+["Onion",45,"Vegetables","1 kg","https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=80"],
+["Carrot",55,"Vegetables","1 kg","https://images.unsplash.com/photo-1445282768818-728615cc910a?auto=format&fit=crop&w=800&q=80"],
+["Beetroot",60,"Vegetables","1 kg","https://images.unsplash.com/photo-1593105544559-ecb03bf76f82?auto=format&fit=crop&w=800&q=80"],
+["Cabbage",40,"Vegetables","1 piece","https://images.unsplash.com/photo-1594282486552-05b4d80fbb9f?auto=format&fit=crop&w=800&q=80"],
+["Cauliflower",65,"Vegetables","1 piece","https://images.unsplash.com/photo-1568584711271-6c929fb49b13?auto=format&fit=crop&w=800&q=80"],
+["Brinjal",50,"Vegetables","1 kg","https://images.unsplash.com/photo-1610557892470-a2f8d3f6a9f0?auto=format&fit=crop&w=800&q=80"],
+["Ladies Finger",55,"Vegetables","1 kg","https://images.unsplash.com/photo-1623595119708-26b1f6e6ab34?auto=format&fit=crop&w=800&q=80"],
+["Green Chilli",70,"Vegetables","250 g","https://images.unsplash.com/photo-1588252303782-cb80119abd6d?auto=format&fit=crop&w=800&q=80"],
+["Spinach",30,"Vegetables","1 bunch","https://images.unsplash.com/photo-1576045057995-568f588f82fb?auto=format&fit=crop&w=800&q=80"],
+["Drumstick",80,"Vegetables","500 g","https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80"],
+["Apple",120,"Fruits","1 kg","https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80"],
+["Banana",60,"Fruits","1 dozen","https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=800&q=80"],
+["Orange",90,"Fruits","1 kg","https://images.unsplash.com/photo-1547514701-42782101795e?auto=format&fit=crop&w=800&q=80"],
+["Mango",140,"Fruits","1 kg","https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80"],
+["Grapes",110,"Fruits","500 g","https://images.unsplash.com/photo-1537640538966-79f369143f8f?auto=format&fit=crop&w=800&q=80"],
+["Papaya",70,"Fruits","1 piece","https://images.unsplash.com/photo-1526318472351-c75fcf070305?auto=format&fit=crop&w=800&q=80"],
+["Pomegranate",160,"Fruits","1 kg","https://images.unsplash.com/photo-1541344999736-83eca272f6fc?auto=format&fit=crop&w=800&q=80"],
+["Watermelon",80,"Fruits","1 piece","https://images.unsplash.com/photo-1563114773-84221bd62daa?auto=format&fit=crop&w=800&q=80"],
+["Guava",90,"Fruits","1 kg","https://images.unsplash.com/photo-1536511132770-e5058c7e8c46?auto=format&fit=crop&w=800&q=80"],
+["Pineapple",100,"Fruits","1 piece","https://images.unsplash.com/photo-1550258987-190a2d41a8ba?auto=format&fit=crop&w=800&q=80"],
+["Rice",320,"Groceries","5 kg","https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80"],
+["Wheat Flour",55,"Groceries","1 kg","https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80"],
+["Sugar",50,"Groceries","1 kg","https://images.unsplash.com/photo-1581441363689-1f3c3c414635?auto=format&fit=crop&w=800&q=80"],
+["Salt",25,"Groceries","1 kg","https://images.unsplash.com/photo-1606914469633-bd392c8c4d2d?auto=format&fit=crop&w=800&q=80"],
+["Cooking Oil",160,"Groceries","1 litre","https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=800&q=80"],
+["Toor Dal",150,"Groceries","1 kg","https://images.unsplash.com/photo-1585996742854-7f0f1b5f8b4d?auto=format&fit=crop&w=800&q=80"],
+["Moong Dal",130,"Groceries","1 kg","https://images.unsplash.com/photo-1612257999756-3a6bfc1e2e6c?auto=format&fit=crop&w=800&q=80"],
+["Chana Dal",110,"Groceries","1 kg","https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=800&q=80"],
+["Tea Powder",180,"Groceries","500 g","https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=800&q=80"],
+["Coffee",220,"Groceries","500 g","https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80"],
+["Biscuits",40,"Groceries","1 pack","https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&w=800&q=80"],
+["Bread",45,"Groceries","1 pack","https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80"],
+["Corn Flakes",210,"Groceries","500 g","https://images.unsplash.com/photo-1517093157656-b9eccef91cb1?auto=format&fit=crop&w=800&q=80"]
+];
+let products=JSON.parse(localStorage.getItem("pp_products")||"null");
+if(!products)products=defaults.map((x,i)=>({id:i+1,name:x[0],price:x[1],cat:x[2],unit:x[3],url:x[4]}));
+let cart=JSON.parse(localStorage.getItem("pp_cart")||"{}");
+function save(){localStorage.setItem("pp_products",JSON.stringify(products));localStorage.setItem("pp_cart",JSON.stringify(cart))}
+function esc(x){return String(x).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function money(x){return "₹"+Number(x).toFixed(2)}
+function renderProducts(){
+ let q=document.getElementById("search").value.toLowerCase(),f=document.getElementById("filter").value;
+ let list=products.filter(p=>(f==="All"||p.cat===f)&&p.name.toLowerCase().includes(q));
+ document.getElementById("products").innerHTML=list.length?list.map(p=>`
+ <article class="card"><img src="${esc(p.url)}" alt="${esc(p.name)}" onerror="this.src='https://placehold.co/800x500?text=Product+Image'">
+ <div class="card-body"><div class="cat">${esc(p.cat)}</div><h3>${esc(p.name)}</h3><div class="unit">${esc(p.unit)}</div><div class="price">${money(p.price)}</div>
+ <button class="btn" onclick="add(${p.id})">ADD TO CART</button></div></article>`).join(""):'<div class="empty">No products found.</div>';
+}
+function add(id){cart[id]=(cart[id]||0)+1;save();updateCount();renderCart()}
+function qty(id,d){cart[id]=(cart[id]||0)+d;if(cart[id]<=0)delete cart[id];save();updateCount();renderCart()}
+function updateCount(){document.getElementById("cartCount").textContent=Object.values(cart).reduce((a,b)=>a+b,0)}
+function renderCart(){
+ let entries=Object.entries(cart).filter(([id,q])=>q>0),total=0;
+ if(!entries.length){document.getElementById("cartItems").innerHTML='<div class="empty">Your cart is empty.</div>';document.getElementById("cartTotal").innerHTML="";return}
+ document.getElementById("cartItems").innerHTML=entries.map(([id,q])=>{let p=products.find(x=>x.id==id);if(!p)return"";let sub=p.price*q;total+=sub;return `<div class="cart-row"><div><div class="cart-name">${esc(p.name)}</div><div>${money(p.price)} × ${q}</div><div class="qty"><button onclick="qty(${p.id},-1)">−</button><strong>${q}</strong><button onclick="qty(${p.id},1)">+</button></div></div><strong>${money(sub)}</strong></div>`}).join("");
+ document.getElementById("cartTotal").innerHTML=`<div class="total"><div class="line"><span>Total items</span><span>${Object.values(cart).reduce((a,b)=>a+b,0)}</span></div><div class="line grand"><span>Grand Total</span><span>${money(total)}</span></div><button class="btn" style="width:100%;margin-top:12px" onclick="show('payment')">CONTINUE TO PAYMENT</button></div>`;
+}
+function show(id){["home","cart","payment","admin"].forEach(x=>document.getElementById(x).classList.toggle("hidden",x!==id));if(id==="cart")renderCart();if(id==="admin")renderAdmin();scrollTo(0,0)}
+function normalize(x){return x.replace(/\D/g,"").replace(/^91/,"")}
+function pay(){
+ let u=document.getElementById("upi").value.trim().toLowerCase(),ph=document.getElementById("payPhone").value.trim(),s=document.getElementById("payStatus");
+ if(u.startsWith(PAY_UPI)&&normalize(ph)===PAY_PHONE)s.textContent="Payment successful";else s.textContent="Payment failed";
+}
+function renderAdmin(){document.getElementById("adminList").innerHTML=products.map(p=>`<div class="admin-item"><div><strong>${esc(p.name)}</strong><br><small>${esc(p.cat)} · ${money(p.price)} · ${esc(p.unit)}</small></div><button class="btn danger" onclick="removeProduct(${p.id})">DELETE</button></div>`).join("")}
+function removeProduct(id){products=products.filter(p=>p.id!==id);delete cart[id];save();renderProducts();renderAdmin();renderCart();updateCount()}
+document.getElementById("loginForm").onsubmit=e=>{e.preventDefault();let u=document.getElementById("username").value,p=document.getElementById("password").value,m=document.getElementById("loginMsg");if(u===USER&&p===PASS){m.textContent="Logined successfully";setTimeout(()=>{document.getElementById("loginPage").classList.add("hidden");document.getElementById("app").classList.remove("hidden")},500)}else m.textContent="Invalid username or password"};
+document.getElementById("addForm").onsubmit=e=>{e.preventDefault();products.push({id:Date.now(),name:document.getElementById("pName").value.trim(),price:Number(document.getElementById("pPrice").value),cat:document.getElementById("pCat").value,unit:document.getElementById("pUnit").value.trim()||"1 item",url:document.getElementById("pUrl").value.trim()});save();renderProducts();renderAdmin();e.target.reset();document.getElementById("adminMsg").textContent="Product added successfully";setTimeout(()=>document.getElementById("adminMsg").textContent="",1800)}
+function logout(){document.getElementById("app").classList.add("hidden");document.getElementById("loginPage").classList.remove("hidden");document.getElementById("loginForm").reset();document.getElementById("loginMsg").textContent=""}
+renderProducts();renderCart();updateCount();
+</script>
+</body>
+</html>
